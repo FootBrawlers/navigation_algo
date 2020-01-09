@@ -1,5 +1,6 @@
 import sys
 import pygame as pg
+import dist as di
 
 
 def main():
@@ -7,6 +8,7 @@ def main():
     clock = pg.time.Clock()
     rect1 = pg.Rect(300, 220, 20, 20)
     rect2 = pg.Rect(300, 220, 20, 20)
+    obs = pg.Rect(350, 190, 30, 50)
     velocity = (0, 0)
     done = False
 
@@ -44,7 +46,24 @@ def main():
         screen.fill((40, 40, 40))
         pg.draw.rect(screen, (150, 200, 20), rect1)
         pg.draw.rect(screen, (200, 100, 20), rect2)
+        pg.draw.rect(screen, (255, 255, 255), obs)
         #pg.draw.circle(screen, (200, 150, 20), (300,220),5)
+        
+        lis = [(rect1.left,rect1.bottom),(rect2.left,rect2.bottom)]
+
+        distance_i = di.shortpath(lis)
+        distances=[]
+        
+        for i in distance_i:
+            distances.append(distance_i[i])
+
+            
+
+        s_p = str(min(distances))[0:5]
+        text3 = font.render(s_p,True,(0,255,0))
+        textRect3 = text3.get_rect()
+        textRect3.center = (300,40)
+            
 
 
         g_pos ='green bot position: ('+str(rect1.left)+','+str(rect1.bottom)+')'
@@ -59,9 +78,19 @@ def main():
         textRect2.center = (510, 40)
         screen.blit(text1, textRect1)
         screen.blit(text2, textRect2)
-        pg.draw.circle(screen, (200, 150, 20), (rect1.left,rect1.bottom),5)
+        screen.blit(text3,textRect3)
+        p_f=1#passing flag
+
+        if min(distances) <= 220 and (rect1.bottom < (obs.bottom-obs.width) and rect2.bottom < (obs.bottom-obs.width) or ( rect1.left < obs.left and rect2.left < obs.left ) or (rect1.bottom > (obs.bottom) and rect2.bottom > (obs.bottom)or (rect1.left>obs.left+obs.width and rect2.left>obs.left+obs.width))):
+            if keys[pg.K_p]:
+                p_f*=-1
+                #pg.draw.circle(screen, (200, 150, 20), (rect2.left,rect2.bottom),5)
+            #pg.draw.circle(screen, (200, 150, 20), (rect1.left,rect1.bottom),5)
         
-        
+        if p_f == -1:
+            pg.draw.circle(screen, (200, 150, 20), (rect2.left,rect2.bottom),5)
+        else:
+            pg.draw.circle(screen, (200, 150, 20), (rect1.left,rect1.bottom),5)
 
         pg.display.flip()
         clock.tick(30)
