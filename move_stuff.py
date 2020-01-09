@@ -1,6 +1,7 @@
 import sys
 import pygame as pg
 import dist as di
+import time
 
 
 def main():
@@ -9,7 +10,7 @@ def main():
     rect1 = pg.Rect(300, 220, 20, 20)
     rect2 = pg.Rect(300, 220, 20, 20)
     obs = pg.Rect(350, 190, 30, 50)
-    velocity = (0, 0)
+    velocity = (10, 10)
     done = False
 
     while not done:
@@ -46,7 +47,7 @@ def main():
         screen.fill((40, 40, 40))
         pg.draw.rect(screen, (150, 200, 20), rect1)
         pg.draw.rect(screen, (200, 100, 20), rect2)
-        pg.draw.rect(screen, (255, 255, 255), obs)
+        pg.draw.rect(screen, (255, 0, 0), obs)
         #pg.draw.circle(screen, (200, 150, 20), (300,220),5)
         
         lis = [(rect1.left,rect1.bottom),(rect2.left,rect2.bottom)]
@@ -92,8 +93,42 @@ def main():
         else:
             pg.draw.circle(screen, (200, 150, 20), (rect1.left,rect1.bottom),5)
 
+        
+        if keys[pg.K_c]:
+            if rect1.bottom < (obs.bottom) and rect1.bottom > (obs.bottom-obs.height):
+                print('hey')
+                md = 1
+                #while(rect1.bottom < obs.bottom+30):
+                    ###time.sleep(100)
+                    #rect1.y +=2
+                    #clock.tick(1200)
+                    #pg.draw.rect(screen, (150, 200, 20), rect1)
+                '''if rect1.left > rect2.left:
+                    while(rect1.left > rect2.left+30):
+                        rect1.x-=2
+                        clock.tick(1200)
+                        pg.draw.rect(screen, (150, 200, 20), rect1)
+                elif rect1.left < rect2.left:
+                    while(rect1.left < rect2.left-30):
+                        rect1.x+=2
+                        clock.tick(1200)
+                        pg.draw.rect(screen, (150, 200, 20), rect1)'''
+            if md==1:
+                rect1.y+=10
+                if rect1.bottom > obs.bottom+30 :
+                    print('came here')
+                    md = 0
+                    ml = 1
+            if md == 0 and ml ==1:
+                if rect1.left > rect2.left+100:
+                    rect1.x-=10
+                elif rect1.left < rect2.left-100:
+                    rect1.x+=10
+
+
+
         pg.display.flip()
-        clock.tick(30)
+        clock.tick(1200)
 
 
 if __name__ == '__main__':
