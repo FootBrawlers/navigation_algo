@@ -98,12 +98,13 @@ def main():
             if rect1.bottom < (obs.bottom) and rect1.bottom > (obs.bottom-obs.height):
                 print('hey')
                 md = 1
-                #while(rect1.bottom < obs.bottom+30):
+                '''
+                while(rect1.bottom < obs.bottom+30):
                     ###time.sleep(100)
-                    #rect1.y +=2
-                    #clock.tick(1200)
-                    #pg.draw.rect(screen, (150, 200, 20), rect1)
-                '''if rect1.left > rect2.left:
+                    rect1.y +=2
+                    clock.tick(1200)
+                    pg.draw.rect(screen, (150, 200, 20), rect1)
+                if rect1.left > rect2.left:
                     while(rect1.left > rect2.left+30):
                         rect1.x-=2
                         clock.tick(1200)
@@ -112,7 +113,8 @@ def main():
                     while(rect1.left < rect2.left-30):
                         rect1.x+=2
                         clock.tick(1200)
-                        pg.draw.rect(screen, (150, 200, 20), rect1)'''
+                        pg.draw.rect(screen, (150, 200, 20), rect1)
+                        '''
             if md==1:
                 rect1.y+=10
                 if rect1.bottom > obs.bottom+30 :
