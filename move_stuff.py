@@ -1,7 +1,7 @@
 import sys
 import pygame as pg
 import dist as di
-import time
+import random as r
 
 
 def main():
@@ -45,9 +45,9 @@ def main():
 
 
         screen.fill((40, 40, 40))
+        pg.draw.rect(screen, (40, 40, 40), obs)
         pg.draw.rect(screen, (150, 200, 20), rect1)
         pg.draw.rect(screen, (200, 100, 20), rect2)
-        pg.draw.rect(screen, (255, 0, 0), obs)
         #pg.draw.circle(screen, (200, 150, 20), (300,220),5)
         
         lis = [(rect1.left,rect1.bottom),(rect2.left,rect2.bottom)]
@@ -96,6 +96,7 @@ def main():
         
         if keys[pg.K_c]:
             if rect1.bottom < (obs.bottom) and rect1.bottom > (obs.bottom-obs.height):
+            #if 1==1:
                 print('hey')
                 md = 1
                 '''
@@ -115,6 +116,9 @@ def main():
                         clock.tick(1200)
                         pg.draw.rect(screen, (150, 200, 20), rect1)
                         '''
+            
+
+
             if md==1:
                 rect1.y+=10
                 if rect1.bottom > obs.bottom+30 :
@@ -124,9 +128,42 @@ def main():
             if md == 0 and ml ==1:
                 if rect1.left > rect2.left+100:
                     rect1.x-=10
+                if float(s_p) < 145:
+                    x = r.randint(0,4)
+                    if x == 0:
+                        rect2.x-=10
+                    if x == 1:
+                        rect2.x += 10
+                    if x == 2:
+                        rect2.y += 10
+                    if x == 3:
+                        rect2.y -= 10
+
                 elif rect1.left < rect2.left-100:
                     rect1.x+=10
 
+        if keys[pg.K_f]:
+                print('f mode')
+                if rect1.left > 150:
+                    rect1.x-=10
+                if rect1.bottom < 140:
+                    rect1.y+=10
+                if rect1.y > 300:
+                    rect1.y-=10
+                if rect1.left <160 and rect1.bottom >=140 and rect1.bottom <=320:
+                    pg.draw.circle(screen, (200, 150, 20), (10,240),5)
+        if keys[pg.K_m]:
+            if float(s_p) > 50:
+                if rect2.bottom > rect1.bottom:
+                    rect2.y-=20
+                if rect2.bottom < rect1.bottom:
+                    rect2.y+=20
+                #if rect2.left > rect1.left:
+                    #rect2.x-=18
+                if rect2.left > rect1.left:
+                    rect2.x-=20
+            if rect2.left < rect1.left:
+                    rect2.x+=20
 
 
         pg.display.flip()
