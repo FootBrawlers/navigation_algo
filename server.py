@@ -5,9 +5,14 @@ import i2c_pi as ipi
 
 def server_program():
     # get the hostname
+<<<<<<< HEAD
+    host = socket.gethostname()
+    port = 5009  # initiate port no above 1024
+=======
     #host = socket.gethostname()
     host = '192.168.43.31'
     port = 5012 # initiate port no above 1024
+>>>>>>> 34a642188ce6982d2e538876550b952816742ac6
 
     server_socket = socket.socket()  # get instance
     # look closely. The bind() function takes tuple as argument
