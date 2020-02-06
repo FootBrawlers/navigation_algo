@@ -6,13 +6,15 @@ import time
 
 
 def client_program():
+    print('Started server')
     pg.init()
     #host = socket.gethostname()  # as both code is running on same pc
     host = '192.168.43.31'
-    port = 5028  # socket server port number
+    port = 5029  # socket server port number
 
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
+    print('connected to the server')
 
     done = False
     pg.joystick.init()
@@ -42,6 +44,7 @@ def client_program():
             message = "2,1,255,255"
         elif axis2 >= 0.85:
             message = "1,2,255,255"
+        print(message)
 
     #message = input(" -> ")  # take input
     #key = input()

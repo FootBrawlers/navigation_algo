@@ -37,7 +37,7 @@ def directions(o1,o2): #(45,1) -> 45 degreees to the right (90,2) -> 90 degrees 
         atm1 = o1_a + o2_a
     return (atm1,o2_d)
 
-def pwmCal(a): #argument is an angle
+'''def pwmCal(a): #argument is an angle
     atm = (atm1,o2_d)
     if atm[0] == 180:
         pwmb = 255
@@ -55,7 +55,9 @@ def pwmCal(a): #argument is an angle
         if atm[1] == 1:
             ins = 'move bot ' + str(atm[0])+'º diagonally'
         else:
-            ins = 'move bot ' + str(atm[0])+'º diagonally'
+            ins = 'move bot ' + str(atm[0])+'º diagonally' 
+            
+            '''
 
 
     
