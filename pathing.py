@@ -7,7 +7,7 @@ import cv2
 import dwa
 
 class Demo(object):
-    def _init_(self):
+    def __init__(self):
         #1 px = 0.1 m
         # That's why everything is multiplied or divided by 10.
         cv2.namedWindow('cvwindow')
@@ -122,5 +122,5 @@ class Demo(object):
             writer.close()
 
 if __name__ == '__main__':
-    Demo()._init_()
+    Demo().__init__()
     Demo().main()
