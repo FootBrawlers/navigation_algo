@@ -25,7 +25,7 @@ class Demo(object):
         self.base = [-3.0, -2.5, +3.0, +2.5]
         self.base = [-3.0, 0.0, 0.0, 0.0]
         self.config = dwa.Config(
-                max_speed = 3.0,
+                max_speed = 5.0,
                 min_speed = -1.0,
                 max_yawrate = np.radians(40.0),
                 max_accel = 15.0,
@@ -36,7 +36,7 @@ class Demo(object):
                 predict_time = 3.0,
                 heading = 0.15,
                 clearance = 1.0,
-                velocity = 1.0,
+                velocity = 2.0,
                 base = self.base
                 )
 
@@ -49,11 +49,15 @@ class Demo(object):
                     self.draw_points.append([x, y])
                     self.point_cloud.append([x/10, y/10])
                     self.goal = None
+                    #com1.append([x/10,y/10])
             else:
-                self.goal = (x/10, y/10)
+                self.goal = (x/10, y/10) #here is where the goal is defined to create the pathing
+                com1.append([x,y])
+                com1.remove(com1[0])
         elif event == cv2.EVENT_LBUTTONUP:
             self.drawing = False
-        print(self.draw_points)
+        #com1 = [x/10,y/10]
+        #print(self.goal[0]*10,self.goal[1]*10)
 
     def main(self):
         import argparse
@@ -66,7 +70,8 @@ class Demo(object):
         if args.save:
             import imageio
             writer = imageio.get_writer('./dwa.gif', mode='I', duration=0.05)
-        while True:
+        cond = True
+        while cond:
             prev_time = time.time()
             self.map = np.zeros((600, 600, 3), dtype=np.uint8)
             for point in self.draw_points:
@@ -90,6 +95,8 @@ class Demo(object):
             pose[0:2] = np.array(self.pose[0:2]) * 10
             pose[2] = self.pose[2]
 
+            #print('pose is: ',self.pose)
+
             base = np.array(self.base) * 10
             base[0:2] += pose[0:2]
             base[2:4] += pose[0:2]
@@ -100,6 +107,9 @@ class Demo(object):
             rect = ((pose[0], pose[1]), (width, height), np.degrees(pose[2]))
             box = cv2.boxPoints(rect)
             box = np.int0(box)
+            #print('coordinates: ',box)
+            
+
             cv2.drawContours(self.map,[box],0,(0,0,255),-1)
 
             fps = int(1.0 / (time.time() - prev_time))
@@ -118,9 +128,23 @@ class Demo(object):
             elif key == ord('r'):
                 self.point_cloud = []
                 self.draw_points = []
+            for i in np.ndarray.tolist(box):
+                trail.add((i[0],i[1]))
+                compare = [i[0],i[1]]
+                c1 = com1[0]
+                print(c1)
+                if c1 == compare or (c1[0] in range((i[0]-40),(i[0]+40))) and (c1[1] in range((i[1]-40),(i[1]+40))):
+                    cond = False
         if args.save:
             writer.close()
+    #def make_trail(a):
+
 
 if __name__ == '__main__':
+    global trail
+    trail = set([])
+    global com1 
+    com1 =[[0,0]]
     Demo().__init__()
     Demo().main()
+    print(trail)
