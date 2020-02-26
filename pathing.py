@@ -105,6 +105,7 @@ class Demo(object):
             width = base[2] - base[0]
             height = base[3] - base[1]
             rect = ((pose[0], pose[1]), (width, height), np.degrees(pose[2]))
+            #print(rect)
             box = cv2.boxPoints(rect)
             box = np.int0(box)
             #print('coordinates: ',box)
@@ -128,13 +129,13 @@ class Demo(object):
             elif key == ord('r'):
                 self.point_cloud = []
                 self.draw_points = []
-            for i in np.ndarray.tolist(box):
-                trail.add((i[0],i[1]))
-                compare = [i[0],i[1]]
-                c1 = com1[0]
-                print(c1)
-                if c1 == compare or (c1[0] in range((i[0]-40),(i[0]+40))) and (c1[1] in range((i[1]-40),(i[1]+40))):
-                    cond = False
+            #print(rect[0])
+            trail.append(rect[0])
+            compare = [rect[0][0],rect[0][1]]
+            c1 = com1[0]
+            '''print(c1)'''
+            if c1 == compare or (c1[0] in range((int(rect[0][0])-80),int((rect[0][0])+80))) and (c1[1] in range((int(rect[0][1])-80),(int(rect[0][1])+80))):
+                cond = False
         if args.save:
             writer.close()
     #def make_trail(a):
@@ -142,7 +143,7 @@ class Demo(object):
 
 if __name__ == '__main__':
     global trail
-    trail = set([])
+    trail = []
     global com1 
     com1 =[[0,0]]
     Demo().__init__()
