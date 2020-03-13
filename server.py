@@ -1,22 +1,19 @@
-
 import socket
 import i2c_pi as ipi
 
 
 def server_program():
     # get the hostname
-
     #host = socket.gethostname()
     host = '192.168.43.31'
-    port = 5012 # initiate port no above 1024
-
+    port = 5031 # initiate port no above 1024
 
     server_socket = socket.socket()  # get instance
     # look closely. The bind() function takes tuple as argument
     server_socket.bind((host, port))  # bind host address and port together
 
     # configure how many client the server can listen simultaneously
-    server_socket.listen(2)
+    server_socket.listen(3)
     conn, address = server_socket.accept()  # accept new connection
     print("Connection from: " + str(address))
     while True:
@@ -35,7 +32,7 @@ def server_program():
         c = int(y[2])
         d = int(y[3])
         print(a,b,c,d)
-        ipi.writeData(a,b,c,d)
+        #ipi.writeData(a,b,c,d)
     conn.close()  # close the connection
 
 
