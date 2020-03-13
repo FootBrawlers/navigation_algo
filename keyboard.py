@@ -9,8 +9,8 @@ def client_program():
     print('Started server')
     pg.init()
     #host = socket.gethostname()  # as both code is running on same pc
-    host = '192.168.43.110'
-    port = 5029  # socket server port number
+    host = '192.168.43.31'
+    port = 5031  # socket server port number
 
     client_socket = socket.socket()  # instantiate
     client_socket.connect((host, port))  # connect to the server
@@ -33,18 +33,18 @@ def client_program():
             keys = pg.key.get_pressed()
             message = "0,0,0,0"
             if keys[pg.K_a] or axis0 <= -0.85:  #to move left
-                message = "3,3,255,255"
-            elif keys[pg.K_d]or axis0 >= 0.85: #to move right
-                message = "4,4,255,255"
-            elif keys[pg.K_w]or axis1 <= -0.85:  #to move up
-                message = "1,1,255,255"
+                message = "3,3,190,190"
+            if keys[pg.K_d]or axis0 >= 0.85: #to move right
+                message = "4,4,190,190"
+            if keys[pg.K_w]or axis1 <= -0.85:  #to move up
+                message = "1,1,190,190"
 
-            elif keys[pg.K_s]or axis1 >= 0.85: #to move down
-                message = "2,2,255,255"
-            elif axis2 <= -0.85: 
-                message = "2,1,255,255"
-            elif axis2 >= 0.85:
-                message = "1,2,255,255"
+            if keys[pg.K_s]or axis1 >= 0.85: #to move down
+                message = "2,2,190,190"
+            if axis2 <= -0.85: 
+                message = "2,1,190,190"
+            if axis2 >= 0.85:
+                message = "1,2,190,190"
             print(message)
 
         #message = input(" -> ")  # take input
