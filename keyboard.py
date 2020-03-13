@@ -30,21 +30,41 @@ def client_program():
             axis1 = joystick.get_axis( 1 ) #for forward movement
             axis0 = joystick.get_axis( 0 ) #for left and right movement
             axis2 = joystick.get_axis( 2 )
+            A = joystick.get_button( 0 )
+            B = joystick.get_button( 1 )
+            Y = joystick.get_button( 3 )
+            X = joystick.get_button( 2 )
             keys = pg.key.get_pressed()
-            message = "0,0,0,0"
+            if A == 1:
+                pressed.append(1)
+            if B == 1:
+                pressed.append(2)
+            if Y == 1:
+                pressed.append(3)
+            if X == 1:
+                pressed.append(0)
+            if pressed[-1] == 0:
+                speed = ",190"
+            if pressed[-1] == 1:
+                speed = ",100"
+            if pressed[-1] == 2:
+                speed = ",120"
+            if pressed[-1] == 3:
+                speed = ",150"
+            message = "0,0"+speed+speed
             if keys[pg.K_a] or axis0 <= -0.85:  #to move left
-                message = "3,3,190,190"
+                message = "3,3"+speed+speed
             if keys[pg.K_d]or axis0 >= 0.85: #to move right
-                message = "4,4,190,190"
+                message = "4,4"+speed+speed
             if keys[pg.K_w]or axis1 <= -0.85:  #to move up
-                message = "1,1,190,190"
+                message = "1,1"+speed+speed
 
             if keys[pg.K_s]or axis1 >= 0.85: #to move down
-                message = "2,2,190,190"
+                message = "2,2"+speed+speed
             if axis2 <= -0.85: 
-                message = "2,1,190,190"
+                message = "2,1"+speed+speed
             if axis2 >= 0.85:
-                message = "1,2,190,190"
+                message = "1,2"+speed+speed
             print(message)
 
         #message = input(" -> ")  # take input
@@ -96,6 +116,8 @@ def client_program():
 
 
 if __name__ == '__main__':
+    global pressed
+    pressed=[0]
     client_program()
     pg.quit()
     sys.exit()
